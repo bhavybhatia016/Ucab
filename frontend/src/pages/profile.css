@@ -1,0 +1,120 @@
+.profile-page { padding: 0 16px 20px; }
+
+.profile-header {
+  text-align: center;
+  padding: 32px 0 20px;
+}
+
+.profile-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: var(--accent-glow);
+  border: 3px solid var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--accent);
+  font-family: var(--font-display);
+  margin: 0 auto 12px;
+}
+
+.profile-name { font-size: 22px; font-weight: 800; margin-bottom: 4px; }
+.profile-email { font-size: 14px; color: var(--grey); margin-bottom: 2px; }
+.profile-phone { font-size: 13px; color: var(--grey); }
+
+/* Stats */
+.profile-stats {
+  display: flex;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+
+.stat-box {
+  flex: 1;
+  text-align: center;
+  padding: 16px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stat-val { font-size: 18px; font-weight: 700; font-family: var(--font-display); color: var(--white); }
+.stat-label { font-size: 11px; color: var(--grey); text-transform: uppercase; letter-spacing: 0.5px; }
+.stat-divider { width: 1px; background: var(--card-border); }
+
+/* Wallet */
+.wallet-add-section { margin-bottom: 16px; }
+.wallet-add-row { display: flex; align-items: center; justify-content: space-between; }
+.wallet-add-label { font-size: 12px; color: var(--grey); margin-bottom: 2px; }
+.wallet-add-amount { font-size: 22px; font-weight: 700; color: var(--accent); font-family: var(--font-display); }
+.wallet-amounts { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+
+.amount-chip {
+  background: var(--dark);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-sm);
+  padding: 8px 16px;
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.amount-chip:hover { border-color: var(--accent); color: var(--accent); }
+
+/* Menu */
+.menu-list {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--card-border);
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.2s;
+  color: var(--white);
+  font-family: var(--font-body);
+}
+
+.menu-item:last-child { border-bottom: none; }
+.menu-item:hover { background: rgba(255,255,255,0.03); }
+
+.menu-icon { font-size: 18px; width: 24px; text-align: center; flex-shrink: 0; }
+.menu-label { flex: 1; font-size: 15px; }
+.menu-arrow { color: var(--grey); font-size: 14px; }
+
+/* Logout */
+.logout-btn {
+  width: 100%;
+  background: rgba(255, 77, 109, 0.08);
+  border: 1px solid rgba(255, 77, 109, 0.25);
+  border-radius: var(--radius);
+  padding: 14px;
+  color: var(--danger);
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-bottom: 12px;
+}
+.logout-btn:hover { background: rgba(255, 77, 109, 0.15); }
+
+.app-version { text-align: center; font-size: 12px; color: var(--grey); margin-top: 4px; }

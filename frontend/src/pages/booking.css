@@ -1,0 +1,182 @@
+.book-page {
+  padding: 16px;
+  padding-bottom: 40px;
+}
+
+.book-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding-top: 8px;
+}
+
+.back-btn {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  color: var(--white);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.back-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+.book-header h2 { font-size: 20px; font-weight: 700; flex: 1; }
+
+.step-indicator { display: flex; gap: 5px; }
+.step-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--card-border);
+  transition: background 0.3s;
+}
+.step-dot.active { background: var(--accent); }
+
+/* Map */
+.map-cab-icon {
+  position: absolute;
+  font-size: 20px;
+  top: 30%;
+  left: 25%;
+}
+.map-cab-icon2 {
+  position: absolute;
+  font-size: 18px;
+  top: 55%;
+  left: 55%;
+}
+
+/* Location card */
+.loc-row { display: flex; gap: 12px; align-items: stretch; }
+.loc-line {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 6px;
+  flex-shrink: 0;
+}
+.loc-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.loc-dot.green { background: var(--success); }
+.loc-dot.red { background: var(--danger); }
+.loc-line-inner { flex: 1; width: 2px; background: var(--card-border); margin: 4px 0; min-height: 20px; }
+.loc-inputs { flex: 1; }
+.loc-input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 15px;
+  width: 100%;
+  padding: 4px 0;
+}
+.loc-input::placeholder { color: var(--grey); }
+
+/* Route summary */
+.route-summary { font-size: 14px; }
+.route-loc { color: var(--light-grey); padding: 4px 0; }
+.route-arrow { color: var(--grey); padding: 2px 12px; font-size: 18px; }
+
+/* Cab list */
+.cab-list { display: flex; flex-direction: column; gap: 10px; }
+
+.cab-card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.cab-card:hover { border-color: rgba(245, 200, 66, 0.3); }
+.cab-card.selected { border-color: var(--accent); background: rgba(245, 200, 66, 0.05); }
+
+.cab-icon { font-size: 28px; }
+.cab-info { flex: 1; }
+.cab-name { font-weight: 700; font-size: 15px; color: var(--white); margin-bottom: 2px; }
+.cab-desc { font-size: 12px; color: var(--grey); margin-bottom: 2px; }
+.cab-eta { font-size: 11px; color: var(--info); }
+.cab-fare { font-size: 20px; font-weight: 700; color: var(--accent); font-family: var(--font-display); }
+.cab-check { position: absolute; top: 10px; right: 10px; color: var(--accent); font-weight: 700; }
+
+/* Fare */
+.fare-summary h3 { font-size: 15px; margin-bottom: 12px; }
+.fare-row { display: flex; justify-content: space-between; font-size: 14px; color: var(--light-grey); margin-bottom: 8px; }
+.fare-row.success { color: var(--success); }
+.fare-row.total { font-size: 18px; font-weight: 700; color: var(--white); margin-bottom: 0; font-family: var(--font-display); }
+
+.sub-heading { font-size: 13px; font-weight: 600; color: var(--grey); text-transform: uppercase; letter-spacing: 0.7px; margin-bottom: 12px; }
+
+.promo-input-row { display: flex; align-items: center; }
+
+/* Payment */
+.payment-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.payment-chip {
+  background: var(--dark);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-sm);
+  padding: 10px 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--light-grey);
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 500;
+}
+.payment-chip.selected { border-color: var(--accent); color: var(--accent); }
+
+/* Refreshments */
+.refresh-list { display: flex; flex-direction: column; gap: 8px; }
+.refresh-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: var(--dark);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 14px;
+  width: 100%;
+  text-align: left;
+}
+.refresh-item.added { border-color: var(--success); background: rgba(52, 217, 136, 0.05); }
+.refresh-price { margin-left: auto; color: var(--accent); font-weight: 600; }
+.refresh-toggle { width: 22px; height: 22px; border-radius: 50%; background: var(--card-border); display: flex; align-items: center; justify-content: center; font-size: 14px; }
+.refresh-item.added .refresh-toggle { background: var(--success); color: var(--black); }
+
+/* Donation */
+.donation-row { display: flex; gap: 8px; }
+.donation-chip {
+  background: var(--dark);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-sm);
+  padding: 8px 14px;
+  cursor: pointer;
+  color: var(--light-grey);
+  font-family: var(--font-body);
+  font-size: 13px;
+  transition: all 0.2s;
+}
+.donation-chip.selected { border-color: var(--success); color: var(--success); }

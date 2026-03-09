@@ -1,0 +1,173 @@
+.home-page {
+  padding: 20px 16px 0;
+}
+
+.home-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-top: 10px;
+}
+
+.greeting { font-size: 13px; color: var(--grey); margin-bottom: 2px; }
+.user-name { font-size: 24px; font-weight: 800; color: var(--white); }
+
+.header-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--accent-glow);
+  border: 2px solid var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--accent);
+  text-decoration: none;
+  font-family: var(--font-display);
+}
+
+.wallet-strip {
+  background: linear-gradient(135deg, var(--card) 0%, #1a1a24 100%);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.wallet-label { font-size: 12px; color: var(--grey); display: block; margin-bottom: 2px; }
+.wallet-amount { font-size: 22px; font-weight: 700; color: var(--accent); font-family: var(--font-display); }
+.rides-count { font-size: 22px; font-weight: 700; color: var(--white); display: block; text-align: right; font-family: var(--font-display); }
+.rides-label { font-size: 12px; color: var(--grey); }
+
+
+.search-box { margin-bottom: 20px; }
+
+.location-input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.dot-green { background: var(--success); }
+.dot-red { background: var(--danger); }
+
+.location-input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 15px;
+  width: 100%;
+  padding: 4px 0;
+}
+
+.location-input::placeholder { color: var(--grey); }
+
+
+.section { margin-bottom: 24px; }
+
+.section-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 12px;
+  font-family: var(--font-display);
+}
+
+
+.quick-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.quick-chip {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-sm);
+  padding: 12px 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--light-grey);
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.chip-icon { font-size: 20px; }
+.quick-chip:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+
+.promo-scroll {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: none;
+}
+
+.promo-scroll::-webkit-scrollbar { display: none; }
+
+.promo-card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-left: 4px solid var(--promo-color, var(--accent));
+  border-radius: var(--radius);
+  padding: 16px;
+  min-width: 160px;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.promo-card:hover { transform: translateY(-2px); }
+
+.promo-badge {
+  font-size: 20px;
+  font-weight: 800;
+  font-family: var(--font-display);
+  color: var(--promo-color, var(--accent));
+  margin-bottom: 4px;
+}
+
+.promo-desc { font-size: 12px; color: var(--grey); margin-bottom: 10px; }
+
+.promo-code {
+  background: rgba(255,255,255,0.05);
+  border: 1px dashed rgba(255,255,255,0.15);
+  border-radius: 6px;
+  padding: 5px 10px;
+  font-size: 12px;
+  color: var(--light-grey);
+  font-weight: 600;
+  letter-spacing: 1px;
+  display: inline-block;
+}
+
+
+.recent-ride { cursor: pointer; transition: all 0.2s; }
+.recent-ride:hover { border-color: var(--accent); }
+
+.ride-row { display: flex; align-items: center; gap: 12px; }
+.ride-icon { font-size: 22px; }
+.ride-info { flex: 1; }
+.ride-dest { font-size: 15px; font-weight: 600; color: var(--white); margin-bottom: 4px; }
+.ride-meta { font-size: 12px; color: var(--grey); display: flex; align-items: center; }
+.ride-fare { font-size: 18px; font-weight: 700; color: var(--accent); font-family: var(--font-display); }
