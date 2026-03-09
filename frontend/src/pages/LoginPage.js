@@ -4,78 +4,52 @@ import { useAuth } from '../context/AuthContext';
 import './auth.css';
 
 export default function LoginPage() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+  const { login } = useAuth();
+  const [form, setForm] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const { login } = useAuth();
-  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
-    setLoading(true);
+    setLoading(true); setError('');
     try {
-      await login(email, password);
-      navigate('/');
+      const user = await login(form.email, form.password);
+      if (user.role === 'admin') navigate('/admin');
+      else if (user.role === 'driver') navigate('/driver');
+      else navigate('/home');
     } catch (err) {
       setError(err.response?.data?.message || 'Login failed');
-    } finally {
-      setLoading(false);
-    }
+    } finally { setLoading(false); }
   };
 
   return (
     <div className="auth-page">
-      <div className="auth-bg">
-        <div className="auth-blob blob1" />
-        <div className="auth-blob blob2" />
-      </div>
-
-      <div className="auth-container fade-up">
-        <div className="auth-logo">
-          <span className="logo-icon">🚖</span>
-          <span className="logo-text">UCab</span>
-        </div>
-
-        <div className="auth-header">
-          <h1>Welcome back</h1>
-          <p>Sign in to continue your journey</p>
-        </div>
-
-        {error && <div className="error-box">{error}</div>}
-
-        <form onSubmit={handleSubmit} className="auth-form">
-          <div className="input-group">
+      <div className="auth-glow" />
+      <div className="auth-card">
+        <div className="auth-logo">🚖 UCab</div>
+        <h2>Welcome Back</h2>
+        <p className="auth-sub">Sign in to continue</p>
+        {error && <div className="auth-error">{error}</div>}
+        <form onSubmit={handleSubmit}>
+          <div className="auth-field">
             <label>Email</label>
-            <input
-              type="email"
-              className="input-field"
-              placeholder="you@example.com"
-              value={email}
-              onChange={e => setEmail(e.target.value)}
-              required
-            />
+            <input type="email" placeholder="you@email.com" value={form.email}
+              onChange={e => setForm({...form, email: e.target.value})} required />
           </div>
-          <div className="input-group">
+          <div className="auth-field">
             <label>Password</label>
-            <input
-              type="password"
-              className="input-field"
-              placeholder="••••••••"
-              value={password}
-              onChange={e => setPassword(e.target.value)}
-              required
-            />
+            <input type="password" placeholder="Your password" value={form.password}
+              onChange={e => setForm({...form, password: e.target.value})} required />
           </div>
-          <button type="submit" className="btn-primary" disabled={loading}>
+          <button type="submit" className="auth-btn" disabled={loading}>
             {loading ? 'Signing in...' : 'Sign In →'}
           </button>
         </form>
-
-        <p className="auth-switch">
-          New here? <Link to="/register">Create an account</Link>
-        </p>
+        <div className="auth-hint">
+          <p>Admin: <strong>admin@ucab.com</strong> / <strong>admin123</strong></p>
+        </div>
+        <p className="auth-switch">No account? <Link to="/register">Create one</Link></p>
       </div>
     </div>
   );

@@ -1,46 +1,53 @@
 const express = require('express');
 const cors = require('cors');
-const dotenv = require('dotenv');
 const http = require('http');
-const { Server } = require('socket.io');
-
-dotenv.config();
+const socketIo = require('socket.io');
+const connectDB = require('./config/db');
+require('dotenv').config();
 
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server, {
-  cors: { origin: '*', methods: ['GET', 'POST'] }
+const io = socketIo(server, {
+  cors: { origin: ['http://localhost:3000'], methods: ['GET', 'POST'] }
 });
 
-// Connect MongoDB
-const connectDB = require('./config/db');
-connectDB().catch(err => console.warn('⚠️  MongoDB error:', err.message));
+connectDB();
 
-// Middleware
-app.use(cors({
-  origin: ['http://localhost:3000', 'http://127.0.0.1:3000'],
-  credentials: true
-}));
+app.use(cors({ origin: ['http://localhost:3000'], credentials: true }));
 app.use(express.json());
 
-// Routes
+
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/bookings', require('./routes/bookingRoutes'));
 app.use('/api/cabs', require('./routes/cabRoutes'));
 app.use('/api/payments', require('./routes/paymentRoutes'));
 app.use('/api/users', require('./routes/userRoutes'));
+app.use('/api/driver', require('./routes/driverRoutes'));
+app.use('/api/admin', require('./routes/adminRoutes'));
 
-// Health check
-app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
 
-// Socket.IO
+app.post('/api/seed-admin', async (req, res) => {
+  try {
+    const User = require('./models/User');
+    const exists = await User.findOne({ email: 'admin@ucab.com' });
+    if (exists) return res.json({ message: 'Admin already exists' });
+    await User.create({
+      name: 'UCab Admin',
+      email: 'admin@ucab.com',
+      password: 'admin123',
+      phone: '9999999999',
+      role: 'admin'
+    });
+    res.json({ message: 'Admin created: admin@ucab.com / admin123' });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 io.on('connection', (socket) => {
-  console.log('Client connected:', socket.id);
-  socket.on('join-booking', (bookingId) => socket.join(bookingId));
-  socket.on('driver-location', ({ bookingId, lat, lng }) => {
-    io.to(bookingId).emit('location-update', { lat, lng });
-  });
-  socket.on('disconnect', () => console.log('Client disconnected:', socket.id));
+  socket.on('join-ride', (rideId) => socket.join(rideId));
+  socket.on('driver-location', (data) => io.to(data.rideId).emit('location-update', data));
+  socket.on('ride-status-update', (data) => io.to(data.rideId).emit('status-update', data));
 });
 
 const PORT = process.env.PORT || 5001;

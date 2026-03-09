@@ -15,11 +15,13 @@ export const AuthProvider = ({ children }) => {
     if (stored) {
       try {
         const u = JSON.parse(stored);
-        setUser(u);
-        axios.defaults.headers.common['Authorization'] = `Bearer ${u.token}`;
-      } catch(e) {
-        localStorage.removeItem('ucab_user');
-      }
+        if (u && u.token && u.role) {
+          setUser(u);
+          axios.defaults.headers.common['Authorization'] = `Bearer ${u.token}`;
+        } else {
+          localStorage.removeItem('ucab_user');
+        }
+      } catch(e) { localStorage.removeItem('ucab_user'); }
     }
     setLoading(false);
   }, []);
@@ -32,8 +34,8 @@ export const AuthProvider = ({ children }) => {
     return data;
   };
 
-  const register = async (name, email, password, phone) => {
-    const { data } = await axios.post('/api/auth/register', { name, email, password, phone });
+  const register = async (name, email, password, phone, role = 'rider') => {
+    const { data } = await axios.post('/api/auth/register', { name, email, password, phone, role });
     setUser(data);
     localStorage.setItem('ucab_user', JSON.stringify(data));
     axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
@@ -44,6 +46,7 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
     localStorage.removeItem('ucab_user');
     delete axios.defaults.headers.common['Authorization'];
+    window.location.href = '/login';
   };
 
   return (
