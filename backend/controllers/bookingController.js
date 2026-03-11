@@ -1,12 +1,4 @@
 const Booking = require('../models/Booking');
-const mongoose = require('mongoose');
-
-const mockDrivers = [
-  { name: 'Rahul Kumar', phone: '+91 98765 43210', rating: 4.8, vehicle: 'Maruti Swift', plateNumber: 'DL 01 AB 1234', avatar: '👨‍✈️' },
-  { name: 'Priya Singh', phone: '+91 87654 32109', rating: 4.9, vehicle: 'Honda City', plateNumber: 'MH 12 CD 5678', avatar: '👩‍✈️' },
-  { name: 'Amit Sharma', phone: '+91 76543 21098', rating: 4.7, vehicle: 'Toyota Innova', plateNumber: 'KA 05 EF 9012', avatar: '🧑‍✈️' },
-  { name: 'Deepak Verma', phone: '+91 65432 10987', rating: 4.6, vehicle: 'BMW 3 Series', plateNumber: 'TN 09 GH 3456', avatar: '👨‍✈️' }
-];
 
 const fareRates = {
   economy: { base: 40, perKm: 12 },
@@ -15,15 +7,14 @@ const fareRates = {
   xl:       { base: 80, perKm: 20 }
 };
 
-const toObjectId = (id) => {
-  try {
-    return new mongoose.Types.ObjectId(id);
-  } catch (e) {
-    return new mongoose.Types.ObjectId();
-  }
-};
+const mockDriverInfo = [
+  { name: 'Rahul Kumar', phone: '9876543210', rating: 4.8, vehicle: 'Maruti Swift', plateNumber: 'DL01AB1234' },
+  { name: 'Priya Singh', phone: '8765432109', rating: 4.9, vehicle: 'Honda City', plateNumber: 'MH12CD5678' },
+  { name: 'Amit Sharma', phone: '7654321098', rating: 4.7, vehicle: 'Toyota Innova', plateNumber: 'KA05EF9012' },
+  { name: 'Deepak Verma', phone: '6543210987', rating: 4.6, vehicle: 'BMW 3 Series', plateNumber: 'TN09GH3456' }
+];
 
-
+// POST /api/bookings/estimate
 const getEstimate = async (req, res) => {
   try {
     const distance = parseFloat((Math.random() * 15 + 3).toFixed(1));
@@ -40,7 +31,7 @@ const getEstimate = async (req, res) => {
   }
 };
 
-
+// POST /api/bookings
 const createBooking = async (req, res) => {
   try {
     const { pickup, dropoff, cabType, paymentMethod, promoCode, donation, refreshments } = req.body;
@@ -53,10 +44,12 @@ const createBooking = async (req, res) => {
     if (promoCode === 'UCAB10') discount = Math.round(baseFare * 0.1);
     if (promoCode === 'FIRST50') discount = Math.round(baseFare * 0.5);
 
-    const driver = mockDrivers[Math.floor(Math.random() * mockDrivers.length)];
+    const driverInfo = mockDriverInfo[Math.floor(Math.random() * mockDriverInfo.length)];
 
     const booking = await Booking.create({
-      user: toObjectId(req.user._id),
+      rider: req.user._id,
+      driver: null,
+      driverInfo,
       pickup: {
         address: pickup?.address || String(pickup) || 'Unknown',
         lat: pickup?.lat || 0,
@@ -68,8 +61,7 @@ const createBooking = async (req, res) => {
         lng: dropoff?.lng || 0
       },
       cabType: cabType || 'economy',
-      driver,
-      status: 'confirmed',
+      status: 'searching',
       fare: {
         base: rate.base,
         distance: Math.round(distance * rate.perKm),
@@ -91,17 +83,17 @@ const createBooking = async (req, res) => {
   }
 };
 
+// GET /api/bookings/history
 const getBookingHistory = async (req, res) => {
   try {
-    const userId = toObjectId(req.user._id);
-    const bookings = await Booking.find({ user: userId }).sort({ createdAt: -1 }).limit(20);
+    const bookings = await Booking.find({ rider: req.user._id }).sort({ createdAt: -1 }).limit(20);
     res.json(bookings);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 };
 
-
+// GET /api/bookings/:id
 const getBookingById = async (req, res) => {
   try {
     const booking = await Booking.findById(req.params.id);
@@ -112,7 +104,7 @@ const getBookingById = async (req, res) => {
   }
 };
 
-
+// PUT /api/bookings/:id/cancel
 const cancelBooking = async (req, res) => {
   try {
     const booking = await Booking.findByIdAndUpdate(req.params.id, { status: 'cancelled' }, { new: true });
@@ -122,7 +114,7 @@ const cancelBooking = async (req, res) => {
   }
 };
 
-
+// PUT /api/bookings/:id/rate
 const rateBooking = async (req, res) => {
   try {
     const { rating, review } = req.body;
