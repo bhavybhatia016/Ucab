@@ -7,7 +7,3 @@ backend/node_modules/
 .env
 backend/.env
 frontend/.env
-
-# Build output
-frontend/build/
-build/
